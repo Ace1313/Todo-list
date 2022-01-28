@@ -6,6 +6,7 @@ const AuthContext = React.createContext({
 
 export const AuthContextProvider = (props) => {
    const [todo, setTodo] = useState([]);
+   const [addTodo, setAddTodo] = useState('');
 
    async function getTodoList() {
       const response = await fetch('http://localhost:8000/todos');
@@ -19,7 +20,15 @@ export const AuthContextProvider = (props) => {
    // }, []);
 
    return (
-      <AuthContext.Provider value={{ todo: todo, getTodoList }}>
+      <AuthContext.Provider
+         value={{
+            todo: todo,
+            setTodo: setTodo,
+            addTodo: addTodo,
+            setAddTodo: setAddTodo,
+            getTodoList,
+         }}
+      >
          {props.children}
       </AuthContext.Provider>
    );

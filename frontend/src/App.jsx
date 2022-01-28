@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import Header from './components/Header';
+import TodoListItems from './components/TodoListItems';
 import TodosList from './components/TodosList';
 import AuthContext from './context/Context';
 
@@ -12,6 +13,7 @@ function App() {
             <Header />
          </header>
          <TodosList />
+         <TodoListItems />
       </div>
    );
 }
