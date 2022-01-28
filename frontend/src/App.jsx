@@ -1,13 +1,17 @@
-import { useContext } from 'react';
-
+import { useContext, useEffect } from 'react';
+import Header from './components/Header';
+import TodosList from './components/TodosList';
 import AuthContext from './context/Context';
 
 function App() {
    const context = useContext(AuthContext);
+
    return (
       <div>
-         <h1>TodoList</h1>
-         <button onClick={context.getTodoList}>Get todos</button>
+         <header>
+            <Header />
+         </header>
+         <TodosList />
       </div>
    );
 }

@@ -20,8 +20,7 @@ app.get('/', async (req, res) => {
    const query = `
     CREATE TABLE todolist (
         id SERIAL PRIMARY KEY,
-        title VARCHAR(20) NOT NULL,
-        todos VARCHAR(55) NOT NULL
+        title VARCHAR(65) NOT NULL
     )
     `;
    await db.query(query);
@@ -41,11 +40,11 @@ app.get('/todos', async (req, res) => {
 
 app.post('/insert', async (req, res) => {
    try {
-      const { title, todos } = req.body;
-      const query = `INSERT INTO todolist (title, todos)
-        VALUES ($1, $2) RETURNING* 
+      const { title } = req.body;
+      const query = `INSERT INTO todolist (title)
+        VALUES ($1) RETURNING* 
         `;
-      const values = [title, todos];
+      const values = [title];
       const data = await db.query(query, values);
 
       return res.json({ success: true, todo: data.rows[0] });

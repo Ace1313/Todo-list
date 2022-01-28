@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const AuthContext = React.createContext({
-   todo: '',
+   todo: [],
 });
 
 export const AuthContextProvider = (props) => {
-   const [todo, setTodo] = useState('Hejsan Hallo');
+   const [todo, setTodo] = useState([]);
 
    async function getTodoList() {
       const response = await fetch('http://localhost:8000/todos');
@@ -13,6 +13,10 @@ export const AuthContextProvider = (props) => {
       setTodo(data);
       console.log(todo);
    }
+
+   // useEffect(() => {
+   //    getTodoList();
+   // }, []);
 
    return (
       <AuthContext.Provider value={{ todo: todo, getTodoList }}>
