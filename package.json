@@ -1,0 +1,19 @@
+{
+  "name": "todo-list-gitt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ace1313/Todo-list.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ace1313/Todo-list/issues"
+  },
+  "homepage": "https://github.com/Ace1313/Todo-list#readme"
+}
