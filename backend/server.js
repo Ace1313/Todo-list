@@ -26,6 +26,17 @@ app.get('/', async (req, res) => {
    return res.json({ success: true });
 });
 
+app.get('/todos', async (req, res) => {
+   try {
+      const query = 'SELECT * FROM todolist';
+      const data = await db.query(query);
+      const todos = data.rows;
+      return res.json({ success: true, todos });
+   } catch (error) {
+      console.log(error);
+   }
+});
+
 app.post('/insert', async (req, res) => {
    try {
       const { title, todos } = req.body;
@@ -38,6 +49,39 @@ app.post('/insert', async (req, res) => {
       return res.json({ success: true, todo: data.rows[0] });
    } catch (error) {
       console.log(error);
+   }
+});
+
+app.get('/todos/:id', async (req, res) => {
+   try {
+      const todoId = req.params.id;
+      const query = 'SELECT * FROM todolist WHERE id = $1';
+      const data = await db.query(query, [todoId]);
+      const todo = data.rows[0];
+
+      if (data.rowCount === 0) throw new Error('Todlist not found');
+
+      return res.json({ success: true, todo });
+   } catch (error) {
+      console.log(error);
+   }
+});
+
+app.delete('/delete/:id', async (req, res) => {
+   try {
+      const todoId = req.params.id;
+
+      const query = 'SELECT * FROM todolist WHERE id = $1';
+
+      const data = await db.query(query, [todoId]);
+
+      if (data.rowCount === 0) throw new Error('List with id not found');
+
+      await db.query('DELETE FROM todolist WHERE id = $1', [todoId]);
+
+      return res.json({ success: true, message: 'Todlist deleted' });
+   } catch (error) {
+      return res.json({ success: false, message: 'Todolist not found' });
    }
 });
 
