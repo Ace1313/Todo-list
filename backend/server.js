@@ -1,10 +1,12 @@
 const { config } = require('dotenv');
 const express = require('express');
+const cors = require('cors');
 require('dotenv/config');
 config();
 
 const { Pool } = require('pg');
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const db = new Pool({
