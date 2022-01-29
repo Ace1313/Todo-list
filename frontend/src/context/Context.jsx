@@ -12,7 +12,6 @@ export const AuthContextProvider = (props) => {
    }
 
    useEffect(() => {
-      console.log(todo);
       getTodoList();
    }, []);
 

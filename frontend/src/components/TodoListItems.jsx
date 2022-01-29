@@ -1,17 +1,25 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import TodolistItemCard from './TodolistItemCard';
 import AuthContext from '../context/Context';
+import styled from 'styled-components';
 
 function TodoListItems() {
    const { todo } = useContext(AuthContext);
 
    return (
-      <div>
-         <h1>här ska alla todos mappas ut</h1>
+      <TodoListItemsWrapper>
          {todo &&
             todo.map((todos) => <TodolistItemCard key={todos.id} {...todos} />)}
-      </div>
+      </TodoListItemsWrapper>
    );
 }
+
+const TodoListItemsWrapper = styled.ul`
+   display: grid;
+   grid-template-rows: 1fr;
+   justify-items: center;
+   padding: 1rem;
+   gap: 1rem;
+`;
 
 export default TodoListItems;

@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/Context';
 
 import styled from 'styled-components';
 import TodoListItems from './TodoListItems';
 
 function TodosList() {
-   const inputRef = useRef(null);
    const [addTodoItem, setAddTodoItem] = useState('');
    const context = useContext(AuthContext);
    // const [todos, setTodos] = useState();
@@ -32,7 +31,7 @@ function TodosList() {
                title: addTodoItem.trim(),
             }),
          });
-         inputRef.current.value = '';
+         setAddTodoItem('');
          const data = await response.json();
          console.log(data);
          context.setTodo((todos) => [...todos, data.todo]);
@@ -41,13 +40,12 @@ function TodosList() {
 
    return (
       <TodoListWrapper>
-         <form>
+         <form onSubmit={addTodoHandler}>
             <input
                onChange={(e) => setAddTodoItem(e.target.value)}
                value={addTodoItem}
                type="title"
                placeholder="New Todo"
-               ref={inputRef}
             />
          </form>
          <button onClick={addTodoHandler}>Add new todo</button>
