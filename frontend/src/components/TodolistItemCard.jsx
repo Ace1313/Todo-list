@@ -1,9 +1,10 @@
 import React from 'react';
 
-function TodolistItemCard() {
+function TodolistItemCard(props) {
    return (
       <div>
-         <h2>Här ska alla todos ligga i cards</h2>
+         <h2> {props.title} </h2>
+         <button>Delete</button>
       </div>
    );
 }

@@ -1,26 +1,41 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/Context';
+
 import styled from 'styled-components';
+import TodoListItems from './TodoListItems';
 
 function TodosList() {
-   const { addTodo, setAddTodo } = useContext(AuthContext);
    const inputRef = useRef(null);
+   const [addTodoItem, setAddTodoItem] = useState('');
+   const context = useContext(AuthContext);
+   // const [todos, setTodos] = useState();
+
+   // async function getTodoList() {
+   //    const response = await fetch('http://localhost:8000/todos');
+   //    const data = await response.json();
+   //    setTodos(data.todos);
+   // }
+
+   // useEffect(() => {
+   //    getTodoList();
+   // }, []);
 
    async function addTodoHandler(e) {
       e.preventDefault();
-      if (addTodo === '') {
+      if (addTodoItem === '') {
          console.log('Please enter something');
       } else {
          const response = await fetch('http://localhost:8000/insert', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-               title: addTodo.trim(),
+               title: addTodoItem.trim(),
             }),
          });
          inputRef.current.value = '';
          const data = await response.json();
          console.log(data);
+         context.setTodo((todos) => [...todos, data.todo]);
       }
    }
 
@@ -28,14 +43,15 @@ function TodosList() {
       <TodoListWrapper>
          <form>
             <input
-               onChange={(e) => setAddTodo(e.target.value)}
-               value={addTodo}
+               onChange={(e) => setAddTodoItem(e.target.value)}
+               value={addTodoItem}
                type="title"
                placeholder="New Todo"
                ref={inputRef}
             />
          </form>
          <button onClick={addTodoHandler}>Add new todo</button>
+         {/* <TodoListItems todos={todos} /> */}
       </TodoListWrapper>
    );
 }
