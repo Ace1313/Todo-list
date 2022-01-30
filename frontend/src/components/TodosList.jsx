@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import AuthContext from '../context/Context';
 
 import styled from 'styled-components';
-import TodoListItems from './TodoListItems';
 
 function TodosList() {
    const [addTodoItem, setAddTodoItem] = useState('');
@@ -49,7 +48,6 @@ function TodosList() {
             />
          </form>
          <button onClick={addTodoHandler}>Add new todo</button>
-         {/* <TodoListItems todos={todos} /> */}
       </TodoListWrapper>
    );
 }
@@ -79,6 +77,9 @@ const TodoListWrapper = styled.div`
       text-align: center;
       outline: none;
       color: #0202026c;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+         rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+         rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
    }
 
    button {
@@ -91,6 +92,9 @@ const TodoListWrapper = styled.div`
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+         rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+         rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
    }
 `;
 
