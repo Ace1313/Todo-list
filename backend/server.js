@@ -68,6 +68,30 @@ app.get('/todos/:id', async (req, res) => {
    }
 });
 
+app.put('/update/:id', async (req, res) => {
+   try {
+      const todoId = req.params.id;
+
+      const query = 'SELECT * FROM todolist WHERE id = $1';
+      const data = await db.query(query, [todoId]);
+
+      if (data.rowCount === 0) throw new Error('List not found');
+
+      const { title } = req.body;
+
+      const updatedQuery = `
+   UPDATE todolist
+   SET title = $1 WHERE id = $2
+   `;
+
+      const values = [title, todoId];
+      await db.query(updatedQuery, values);
+      return res.json({ success: true, values });
+   } catch (error) {
+      console.log(error);
+   }
+});
+
 app.delete('/delete/:id', async (req, res) => {
    try {
       const todoId = req.params.id;

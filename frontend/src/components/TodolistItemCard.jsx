@@ -6,7 +6,7 @@ import { FaTrash } from 'react-icons/fa';
 function TodolistItemCard(props) {
    const { setTodo, todo } = useContext(AuthContext);
    const [checkbox, setCheckbox] = useState(false);
-   console.log(checkbox);
+   const [updateTodo, setUpdateTodo] = useState('');
 
    async function deleteTodoHandler(id) {
       const response = await fetch(`http://localhost:8000/delete/${id}`, {
@@ -20,6 +20,18 @@ function TodolistItemCard(props) {
       }
    }
 
+   async function editTodoHandler(id) {
+      const response = await fetch(`http://localhost:8000/update/${id}`, {
+         method: 'PUT',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+            title: updateTodo.trim(),
+         }),
+      });
+      const data = await response.json();
+      console.log(data);
+   }
+
    function checkboxHandler(e) {
       setCheckbox(!checkbox);
    }
@@ -27,6 +39,10 @@ function TodolistItemCard(props) {
    return (
       <CardWrapper>
          <h3 className={checkbox ? 'checkbox' : ''}> {props.title} </h3>
+         <div>
+            <input onChange={(e) => setUpdateTodo(e.target.value)} type="text" />
+            <button onClick={() => editTodoHandler(props.id)}>E</button>
+         </div>
          <label>
             <input
                checked={checkbox}
@@ -47,7 +63,7 @@ const CardWrapper = styled.li`
 
    width: 50%;
    display: grid;
-   grid-template-columns: 1fr 20px 20px;
+   grid-template-columns: 1fr 20px 20px 20px;
    justify-items: center;
    border-radius: 5px;
    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
@@ -68,6 +84,7 @@ const CardWrapper = styled.li`
    .checkbox {
       text-decoration: line-through;
       text-decoration-thickness: 3px;
+      text-decoration-color: red;
    }
 `;
 

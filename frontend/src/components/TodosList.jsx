@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 function TodosList() {
    const [addTodoItem, setAddTodoItem] = useState('');
-   const context = useContext(AuthContext);
+   const { setTodo } = useContext(AuthContext);
    // const [todos, setTodos] = useState();
 
    // async function getTodoList() {
@@ -33,7 +33,7 @@ function TodosList() {
          setAddTodoItem('');
          const data = await response.json();
          console.log(data);
-         context.setTodo((todos) => [...todos, data.todo]);
+         setTodo((todos) => [...todos, data.todo]);
       }
    }
 
