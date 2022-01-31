@@ -5,7 +5,7 @@ import { FaTrash } from 'react-icons/fa';
 
 function TodolistItemCard(props) {
    const { setTodo, todo } = useContext(AuthContext);
-   const [checkbox, setCheckbox] = useState(false);
+   const [checkbox, setCheckbox] = useState(props.completed);
    const [updateTodo, setUpdateTodo] = useState('');
 
    async function deleteTodoHandler(id) {
@@ -32,9 +32,21 @@ function TodolistItemCard(props) {
       console.log(data);
    }
 
-   function checkboxHandler(e) {
+   async function checkboxHandler() {
+      const response = await fetch(
+         `http://localhost:8000/setCompleted/${props.id}`,
+         {
+            method: 'PUT',
+         }
+      );
+      const data = await response.json();
+      console.log(data);
       setCheckbox(!checkbox);
    }
+
+   useEffect(() => {
+      setCheckbox(props.completed);
+   }, [props.completed]);
 
    return (
       <CardWrapper>
@@ -45,8 +57,8 @@ function TodolistItemCard(props) {
          </div>
          <label>
             <input
-               checked={checkbox}
-               onChange={(e) => checkboxHandler(e)}
+               defaultChecked={props.completed}
+               onChange={() => checkboxHandler()}
                type="checkbox"
             />
          </label>

@@ -6,17 +6,6 @@ import styled from 'styled-components';
 function TodosList() {
    const [addTodoItem, setAddTodoItem] = useState('');
    const { setTodo } = useContext(AuthContext);
-   // const [todos, setTodos] = useState();
-
-   // async function getTodoList() {
-   //    const response = await fetch('http://localhost:8000/todos');
-   //    const data = await response.json();
-   //    setTodos(data.todos);
-   // }
-
-   // useEffect(() => {
-   //    getTodoList();
-   // }, []);
 
    async function addTodoHandler(e) {
       e.preventDefault();
