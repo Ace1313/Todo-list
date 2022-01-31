@@ -1,12 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import AuthContext from '../context/Context';
 import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
+import { AiTwotoneEdit } from 'react-icons/ai';
 
 function TodolistItemCard(props) {
-   const { setTodo, todo } = useContext(AuthContext);
+   const { setTodo, todo, getTodoList } = useContext(AuthContext);
    const [checkbox, setCheckbox] = useState(props.completed);
    const [updateTodo, setUpdateTodo] = useState('');
+   const [toggleInput, setToggleInput] = useState(false);
+   const inputRef = useRef();
 
    async function deleteTodoHandler(id) {
       const response = await fetch(`http://localhost:8000/delete/${id}`, {
@@ -21,15 +24,25 @@ function TodolistItemCard(props) {
    }
 
    async function editTodoHandler(id) {
-      const response = await fetch(`http://localhost:8000/update/${id}`, {
-         method: 'PUT',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({
-            title: updateTodo.trim(),
-         }),
-      });
-      const data = await response.json();
-      console.log(data);
+      if (updateTodo === '') {
+         return console.log('Noo');
+      } else {
+         const response = await fetch(`http://localhost:8000/update/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+               title: updateTodo.trim(),
+            }),
+         });
+         const data = await response.json();
+
+         setUpdateTodo((todo) => [...todo], data.values[0]);
+      }
+      inputRef.current.value = '';
+   }
+
+   function toggleInputHandler() {
+      setToggleInput(!toggleInput);
    }
 
    async function checkboxHandler() {
@@ -39,8 +52,6 @@ function TodolistItemCard(props) {
             method: 'PUT',
          }
       );
-      const data = await response.json();
-      console.log(data);
       setCheckbox(!checkbox);
    }
 
@@ -48,13 +59,23 @@ function TodolistItemCard(props) {
       setCheckbox(props.completed);
    }, [props.completed]);
 
+   useEffect(() => {
+      getTodoList();
+   }, [updateTodo]);
+
    return (
       <CardWrapper>
          <h3 className={checkbox ? 'checkbox' : ''}> {props.title} </h3>
-         <div>
-            <input onChange={(e) => setUpdateTodo(e.target.value)} type="text" />
-            <button onClick={() => editTodoHandler(props.id)}>E</button>
-         </div>
+         {toggleInput && (
+            <div>
+               <input
+                  className="edit_todo"
+                  onChange={(e) => setUpdateTodo(e.target.value)}
+                  type="text"
+                  ref={inputRef}
+               />
+            </div>
+         )}
          <label>
             <input
                defaultChecked={props.completed}
@@ -65,15 +86,24 @@ function TodolistItemCard(props) {
          <button onClick={() => deleteTodoHandler(props.id)}>
             <FaTrash />
          </button>
+         <button onClick={() => editTodoHandler(props.id)}>
+            <AiTwotoneEdit />
+         </button>
+         <button onClick={toggleInputHandler}>
+            {toggleInput ? 'HideInput' : 'Edit'}
+         </button>
       </CardWrapper>
    );
 }
 
 const CardWrapper = styled.li`
+   .edit_todo {
+      color: red;
+   }
    list-style: none;
    padding: 0.8rem;
-
    width: 50%;
+   height: 7rem;
    display: grid;
    grid-template-columns: 1fr 20px 20px 20px;
    justify-items: center;

@@ -1,11 +1,20 @@
+const { config } = require('dotenv');
 const express = require('express');
 const cors = require('cors');
-const router = require('./routes.js');
+require('dotenv/config');
+config();
 
+const { Pool } = require('pg');
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/api', router);
+
+const db = new Pool({
+   host: process.env.DB_HOST,
+   user: process.env.DB_USER,
+   password: process.env.DB_PASS,
+   database: process.env.DB_SOURCE,
+});
 
 app.get('/', async (req, res) => {
    const query = `
@@ -21,6 +30,17 @@ app.get('/', async (req, res) => {
 
 //completed boolean DEFAULT false
 
+app.get('/todos', async (req, res) => {
+   try {
+      const query = 'SELECT * FROM todolist ORDER BY "createdAt"';
+      const data = await db.query(query);
+      const todos = data.rows;
+      return res.json({ success: true, todos });
+   } catch (error) {
+      console.log(error);
+   }
+});
+
 app.post('/insert', async (req, res) => {
    try {
       const { title } = req.body;
@@ -31,6 +51,21 @@ app.post('/insert', async (req, res) => {
       const data = await db.query(query, values);
 
       return res.json({ success: true, todo: data.rows[0] });
+   } catch (error) {
+      console.log(error);
+   }
+});
+
+app.get('/todos/:id', async (req, res) => {
+   try {
+      const todoId = req.params.id;
+      const query = 'SELECT * FROM todolist WHERE id = $1';
+      const data = await db.query(query, [todoId]);
+      const todo = data.rows[0];
+
+      if (data.rowCount === 0) throw new Error('Todlist not found');
+
+      return res.json({ success: true, todo });
    } catch (error) {
       console.log(error);
    }

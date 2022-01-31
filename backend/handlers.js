@@ -1,31 +1,48 @@
-const db = require('./DB.js');
+// const db = require('./DB.js');
 
-async function getAllTodos() {
-   try {
-      const query = 'SELECT * FROM todolist ORDER BY "createdAt"';
-      const data = await db.query(query);
-      const todos = data.rows;
-      return todos;
-   } catch (error) {
-      console.log(error);
-   }
-}
+// async function getAllTodos() {
+//    try {
+//       const query = 'SELECT * FROM todolist ORDER BY "createdAt"';
+//       const data = await db.query(query);
+//       const todos = data.rows;
+//       return todos;
+//    } catch (error) {
+//       console.log(error);
+//    }
+// }
 
-async function getOneTodo(todoId) {
-   try {
-      const query = 'SELECT * FROM todolist WHERE id = $1';
-      const data = await db.query(query, [todoId]);
-      const todo = data.rows[0];
+// async function addTodo(title) {
+//    try {
+//       const query = `INSERT INTO todolist (title)
+//         VALUES ($1) RETURNING*
+//         `;
 
-      if (data.rowCount === 0) throw new Error('Todlist not found');
+//       const data = await db.query(query, [title]);
 
-      const { createdAt, ...rest } = todo;
+//       const todo = data.rows[0];
 
-      return rest;
-   } catch (error) {
-      console.log(error);
-   }
-}
+//       return todo;
+//    } catch (error) {
+//       console.log(error);
+//    }
+// }
 
-module.exports = getAllTodos;
-module.exports = getOneTodo;
+// async function getOneTodo(todoId) {
+//    try {
+//       const query = 'SELECT * FROM todolist WHERE id = $1';
+//       const data = await db.query(query, [todoId]);
+//       const todo = data.rows[0];
+
+//       if (data.rowCount === 0) throw new Error('Todlist not found');
+
+//       const { createdAt, ...rest } = todo;
+
+//       return rest;
+//    } catch (error) {
+//       console.log(error);
+//    }
+// }
+
+// module.exports = getAllTodos;
+// module.exports = getOneTodo;
+// module.exports = addTodo;

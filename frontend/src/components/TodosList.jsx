@@ -21,7 +21,6 @@ function TodosList() {
          });
          setAddTodoItem('');
          const data = await response.json();
-         console.log(data);
          setTodo((todos) => [...todos, data.todo]);
       }
    }
