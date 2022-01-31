@@ -74,6 +74,9 @@ function TodolistItemCard(props) {
                   type="text"
                   ref={inputRef}
                />
+               <button onClick={() => editTodoHandler(props.id)}>
+                  {toggleInput ? 'Ok' : ''}
+               </button>
             </div>
          )}
          <label>
@@ -83,14 +86,11 @@ function TodolistItemCard(props) {
                type="checkbox"
             />
          </label>
-         <button onClick={() => deleteTodoHandler(props.id)}>
+         <button className="btn-icon" onClick={() => deleteTodoHandler(props.id)}>
             <FaTrash />
          </button>
-         <button onClick={() => editTodoHandler(props.id)}>
+         <button className="btn-icon" onClick={toggleInputHandler}>
             <AiTwotoneEdit />
-         </button>
-         <button onClick={toggleInputHandler}>
-            {toggleInput ? 'HideInput' : 'Edit'}
          </button>
       </CardWrapper>
    );
@@ -100,19 +100,21 @@ const CardWrapper = styled.li`
    .edit_todo {
       color: red;
    }
+
    list-style: none;
    padding: 0.8rem;
    width: 50%;
    height: 7rem;
    display: grid;
-   grid-template-columns: 1fr 20px 20px 20px;
+   grid-template-columns: 1fr 20px 20px 20px 35px;
+
    justify-items: center;
    border-radius: 5px;
    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
       rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
       rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 
-   button {
+   .btn-icon {
       background-color: transparent;
       border: none;
       padding: 0.3rem;

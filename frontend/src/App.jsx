@@ -1,20 +1,32 @@
-import { useContext, useEffect } from 'react';
+import { useState } from 'react';
 import Header from './components/Header';
 import TodoListItems from './components/TodoListItems';
 import TodosList from './components/TodosList';
-import AuthContext from './context/Context';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from './components/globalStyles';
+import { darkTheme, lightTheme } from './components/Theme';
+import Switch from '@mui/material/Switch';
 
 function App() {
-   const context = useContext(AuthContext);
+   const [theme, setTheme] = useState('light');
+
+   function themeToggler() {
+      theme === 'light' ? setTheme('dark') : setTheme('light');
+   }
 
    return (
-      <div>
-         <header>
-            <Header />
-         </header>
-         <TodosList />
-         <TodoListItems />
-      </div>
+      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+         <>
+            <GlobalStyles />
+            <Switch onClick={themeToggler} color="warning" />
+            <span> {theme === 'light' ? '🌚' : '🌞'} </span>
+            <header>
+               <Header />
+            </header>
+            <TodosList />
+            <TodoListItems />
+         </>
+      </ThemeProvider>
    );
 }
 

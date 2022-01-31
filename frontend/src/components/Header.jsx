@@ -12,6 +12,7 @@ const HeaderWrapper = styled.div`
    display: flex;
    justify-content: center;
    padding: 1rem;
+   font-size: 28px;
 `;
 
 export default Header;
