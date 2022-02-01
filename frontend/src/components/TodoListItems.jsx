@@ -21,6 +21,7 @@ const TodoListItemsWrapper = styled.ul`
    justify-items: center;
    padding: 1rem;
    gap: 1rem;
+   width: 100%;
 `;
 
 export default TodoListItems;

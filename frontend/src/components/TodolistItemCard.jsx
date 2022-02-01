@@ -103,7 +103,7 @@ const CardWrapper = styled.li`
 
    list-style: none;
    padding: 0.8rem;
-   width: 50%;
+   width: 55%;
    height: 7rem;
    display: grid;
    grid-template-columns: 1fr 20px 20px 20px 35px;
@@ -129,6 +129,10 @@ const CardWrapper = styled.li`
       text-decoration: line-through;
       text-decoration-thickness: 3px;
       text-decoration-color: red;
+   }
+
+   @media screen and (max-width: 600px) {
+      width: 100%;
    }
 `;
 

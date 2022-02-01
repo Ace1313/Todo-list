@@ -19,7 +19,7 @@ function App() {
          <>
             <GlobalStyles />
             <Switch onClick={themeToggler} color="warning" />
-            <span> {theme === 'light' ? '🌚' : '🌞'} </span>
+            <span> {theme === 'light' ? '🌞' : '🌛'} </span>
             <header>
                <Header />
             </header>
