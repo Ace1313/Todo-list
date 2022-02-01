@@ -39,6 +39,7 @@ function TodolistItemCard(props) {
          setUpdateTodo((todo) => [...todo], data.values[0]);
       }
       inputRef.current.value = '';
+      setToggleInput(false);
    }
 
    function toggleInputHandler() {
@@ -67,14 +68,17 @@ function TodolistItemCard(props) {
       <CardWrapper>
          <h3 className={checkbox ? 'checkbox' : ''}> {props.title} </h3>
          {toggleInput && (
-            <div>
+            <div className="edit_todo">
                <input
                   className="edit_todo"
                   onChange={(e) => setUpdateTodo(e.target.value)}
                   type="text"
                   ref={inputRef}
                />
-               <button onClick={() => editTodoHandler(props.id)}>
+               <button
+                  className="edit_btn"
+                  onClick={() => editTodoHandler(props.id)}
+               >
                   {toggleInput ? 'Ok' : ''}
                </button>
             </div>
@@ -98,7 +102,15 @@ function TodolistItemCard(props) {
 
 const CardWrapper = styled.li`
    .edit_todo {
-      color: red;
+      grid-row-start: 2;
+      grid-column-start: 1;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      outline: none;
+      color: #0202026c;
+      height: 1.3rem;
+      width: 55%;
    }
 
    list-style: none;
@@ -106,19 +118,29 @@ const CardWrapper = styled.li`
    width: 55%;
    height: 7rem;
    display: grid;
-   grid-template-columns: 1fr 20px 20px 20px 35px;
-
+   grid-template-columns: 1fr 20px 20px 20px;
+   grid-template-rows: 1fr 1fr;
    justify-items: center;
    border-radius: 5px;
    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
       rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
-      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+      rgba(10, 37, 61, 0.35) 0px -2px 6px 0px inset;
 
    .btn-icon {
       background-color: transparent;
       border: none;
       padding: 0.3rem;
       font-size: 18px;
+      cursor: pointer;
+   }
+
+   .edit_btn {
+      border: none;
+      border-radius: 5px;
+      background-color: #ff9ff3;
+      cursor: pointer;
+      padding: 0.3rem;
+      margin-left: 0.5rem;
    }
    label {
       align-self: center;
@@ -133,6 +155,10 @@ const CardWrapper = styled.li`
 
    @media screen and (max-width: 600px) {
       width: 100%;
+
+      .edit_todo {
+         min-width: 85%;
+      }
    }
 `;
 

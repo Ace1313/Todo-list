@@ -45,7 +45,7 @@ const TodoListWrapper = styled.div`
    flex-direction: column;
    align-items: center;
    justify-content: center;
-   align-content: center;
+
    border: 1px solid whitesmoke;
    height: 150px;
    padding: 1rem;
@@ -55,9 +55,13 @@ const TodoListWrapper = styled.div`
 
    form {
       width: 70%;
+      display: flex;
+      justify-content: center;
    }
    input {
-      width: 100%;
+      display: flex;
+      background-color: antiquewhite;
+      width: 80%;
       height: 3rem;
       border: none;
       border-radius: 5px;
@@ -71,7 +75,7 @@ const TodoListWrapper = styled.div`
    }
 
    button {
-      width: 70%;
+      width: 10%;
       height: 3rem;
       margin-top: 1rem;
       border: none;
@@ -83,6 +87,15 @@ const TodoListWrapper = styled.div`
       box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
          rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
          rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+   }
+
+   @media screen and (max-width: 600px) {
+      button {
+         width: 69%;
+      }
+      input {
+         width: 100%;
+      }
    }
 `;
 
