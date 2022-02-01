@@ -66,7 +66,7 @@ function TodolistItemCard(props) {
 
    return (
       <CardWrapper>
-         <h3 className={checkbox ? 'checkbox' : ''}> {props.title} </h3>
+         <h2 className={checkbox ? 'checkbox' : ''}> {props.title} </h2>
          {toggleInput && (
             <div className="edit_todo">
                <input
@@ -134,13 +134,26 @@ const CardWrapper = styled.li`
       cursor: pointer;
    }
 
+   .btn-icon:hover {
+      transform: translateY(-2px);
+      transition: all 0.3s;
+      color: #ff9ff3;
+   }
+
    .edit_btn {
       border: none;
       border-radius: 5px;
       background-color: #ff9ff3;
       cursor: pointer;
-      padding: 0.3rem;
+      padding: 0.2rem;
       margin-left: 0.5rem;
+      width: 30px;
+   }
+
+   .edit_btn:hover {
+      transform: translateY(-2px);
+      transition: all 0.3s;
+      background-color: #81ecec;
    }
    label {
       align-self: center;

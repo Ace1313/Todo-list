@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Header from './components/Header';
 import TodoListItems from './components/TodoListItems';
 import TodosList from './components/TodosList';
@@ -19,7 +19,7 @@ function App() {
          <>
             <GlobalStyles />
             <Switch onClick={themeToggler} color="warning" />
-            <span> {theme === 'light' ? '🌞' : '🌛'} </span>
+            <span className="hover_emoji"> {theme === 'light' ? '🌞' : '🌛'} </span>
             <header>
                <Header />
             </header>
